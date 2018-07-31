@@ -85,9 +85,13 @@
 </template>
 
 <script>
+
+const verifyForm = require("~/lib/VerifyForm")
 import checkBox from "~/components/checkBox.vue"
 import datePicker from "vuejs-datepicker"
-import verify from "~/lib/VerifyForm"
+require("es6-promise").polyfill()
+require("isomorphic-fetch")
+
 
 export default {
   components: {
@@ -108,7 +112,7 @@ export default {
   }),
   computed: {
     submitText() {
-      let errorText = verify(this.$data)
+      let errorText = verifyForm(this.$data)
       return errorText || "Submit"
     }
   },
@@ -118,8 +122,28 @@ export default {
       this.deadlineDate = ""
       return (this.deadline = false)
     },
-    submit() {
-      alert("submit")
+    async submit() {
+      let response = await fetch("/api/submit", {
+        method: "post",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(this.$data)
+      })
+      if (response.status >= 400) {
+        console.error("Bad response from server")
+      }
+      let text = await response.text()
+      if (text.startsWith("Success")) {
+        ;(this.cover = false),
+          (this.description = ""),
+          (this.deadline = false),
+          (this.deadlineDate = ""),
+          (this.journalName = ""),
+          (this.contactName = ""),
+          (this.contactEmail = ""),
+          (this.contactPhone = ""),
+          (this.KFS = "")
+      }
+      this.alertText = text
     }
   }
 }
