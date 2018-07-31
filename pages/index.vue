@@ -10,20 +10,20 @@
     </div>
 
     <div class="form oneliner">
-        <h2 class="question">Is this a journal cover illustration request?</h2>
+      <h2 class="question">Is this a journal cover illustration request?</h2>
 
-        <span class="questionSub">YES *Free Service</span>
-        <checkBox type="radio" id="YES" name="serviceCover" :model.sync="cover" :value="true"  />
+      <span class="questionSub">YES *Free Service</span>
+      <checkBox id="YES" :model.sync="cover" :value="true" type="radio" name="serviceCover" />
 
-        <span class="questionSub">NO *Paid Service</span>
-        <checkBox type="radio" id="NO"  name="serviceCover" :model.sync="cover" :value="false" />
+      <span class="questionSub">NO *Paid Service</span>
+      <checkBox id="NO" :model.sync="cover" :value="false" type="radio" name="serviceCover" />
 
     </div>
     <hr>
 
     <div class="form">
       <h2 class="question">Provide a brief description of what you would like illustrated:</h2>
-      <textarea class="description textInput" v-model="description" placeholder="description"></textarea>
+      <textarea v-model="description" class="description textInput" placeholder="description"/>
     </div>
     <hr>
 
@@ -31,9 +31,9 @@
       <h2 class="question">Is there a hard deadline?</h2>
       <div class="deadlineSelect">
         <p>Yes: </p>
-        <datePicker input-class="textInput" v-model="deadlineDate" v-on:selected="checkDate" name="uniquename"></datePicker>
+        <datePicker v-model="deadlineDate" input-class="textInput" name="uniquename" @selected="checkDate"/>
         <p>No</p>
-        <checkBox type="radio" name="deadline" :change="checkDate" :model.sync="deadline" :value="false" />
+        <checkBox :change="checkDate" :model.sync="deadline" :value="false" type="radio" name="deadline" />
       </div>
       
       
@@ -48,10 +48,10 @@
 
     <div class="form">
       <h2 class="question">If relevant, please provide the name of the journal 
-        where the work will be submitted
-         (for the illustrators to work within journal standards).
+      where the work will be submitted
+      (for the illustrators to work within journal standards).
       </h2>
-      <input type="text" class="textInput" v-model="journalName"/>
+      <input v-model="journalName" type="text" class="textInput">
       
     </div>
     <hr>
@@ -59,26 +59,24 @@
     <div class="form">
       <h2 class="question">Primary contact information:</h2>
       <div class="oneliner">
-        <input type="text" class="textInput" v-model="contactName" placeholder="Full Name"/>
-        <input type="text" class="textInput" v-model="contactEmail" placeholder="Email"/>
-        <input type="text" class="textInput" v-model="contactPhone" placeholder="Phone"/>
+        <input v-model="contactName" type="text" class="textInput" placeholder="Full Name">
+        <input v-model="contactEmail" type="text" class="textInput" placeholder="Email">
+        <input v-model="contactPhone" type="text" class="textInput" placeholder="Phone">
       </div>
     </div>
     <hr>
 
-    <div class="form">
+    <div v-show="!cover" class="form">
       <h2 class="question">Expected KFS account number note, 
-        there will be no billing until a preliminary quote is provided):
+      there will be no billing until a preliminary quote is provided):
       </h2>
-      <input type="text" class="textInput" v-model="KFS" placeholder="KFS"/>
+      <input v-model="KFS" type="text" class="textInput" placeholder="KFS">
       
       
     </div>
     <hr>
     <div class="form">
-      <button class="button" v-bind:class="{disabled: submitText!=='Submit'}" v-on:click="submit">{{submitText}}</button>
-      
-      
+      <button :class="{disabled: submitText!=='Submit'}" class="button" @click="submit">{{ submitText }}</button>
     </div>
     
 
@@ -87,17 +85,9 @@
 </template>
 
 <script>
-
 import checkBox from "~/components/checkBox.vue"
-import datePicker from 'vuejs-datepicker';
-
-const getErrorFor = (object, keysToCheck)=>{
-  for(let key of keysToCheck){
-    if(object[key]===undefined)console.error('Object does not have key: '+key)
-    if(object[key]==='')return `Missing Field: ${key}`
-  }
-  return 0;
-}
+import datePicker from "vuejs-datepicker"
+import verify from "~/lib/VerifyForm"
 
 export default {
   components: {
@@ -105,33 +95,31 @@ export default {
     datePicker
   },
 
-  data:() => ({
+  data: () => ({
     cover: false,
-    description: '',
+    description: "",
     deadline: false,
-    deadlineDate: '',
-    journalName: '',
-    contactName: '',
-    contactEmail: '',
-    contactPhone: '',
-    KFS: '',
+    deadlineDate: "",
+    journalName: "",
+    contactName: "",
+    contactEmail: "",
+    contactPhone: "",
+    KFS: ""
   }),
-  methods:{
-    checkDate(date){
-      if(date!==null) return this.deadline=true;
-      this.deadlineDate=''
-      return this.deadline=false;
-    },
-    submit(){
-      alert('submit')
-    },
-  },
   computed: {
-    submitText(){
-      let keysToCheck = ['description', 'contactName', 'contactEmail', 'contactPhone', 'KFS']
-      let errorText = getErrorFor(this.$data, keysToCheck)
-      return  errorText || 'Submit';
-
+    submitText() {
+      let errorText = verify(this.$data)
+      return errorText || "Submit"
+    }
+  },
+  methods: {
+    checkDate(date) {
+      if (date !== null) return (this.deadline = true)
+      this.deadlineDate = ""
+      return (this.deadline = false)
+    },
+    submit() {
+      alert("submit")
     }
   }
 }
@@ -142,7 +130,7 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 20px 6em 20px 6em; 
+  padding: 20px 6em 20px 6em;
 }
 .form {
   margin-top: 2em;
@@ -167,6 +155,7 @@ export default {
 .oneliner {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .description {
   width: 100%;
@@ -184,24 +173,25 @@ export default {
   margin-left: 0.7em;
 }
 .textInput {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   outline: none;
   /* border: solid rgba(0,0,0,0.3) 1px; */
-  border:none;
+  border: none;
   padding: 1em;
   font-size: 0.9em;
   color: black;
   transition: all 0.3s ease;
   border-radius: 3px;
+  margin-top: 1em;
 }
 .textInput:hover {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 .button {
   background: rgba(0, 141, 0, 0.287);
   outline: none;
   /* border: solid rgba(0,0,0,0.3) 1px; */
-  border:none;
+  border: none;
   padding: 1em;
   font-size: 0.9em;
   color: black;
@@ -213,9 +203,8 @@ export default {
   background: rgba(0, 141, 0, 0.116);
   cursor: pointer;
 }
-.button.disabled{
+.button.disabled {
   background: rgba(255, 0, 0, 0.315);
   pointer-events: none;
 }
-
 </style>

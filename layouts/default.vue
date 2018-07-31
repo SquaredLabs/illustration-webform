@@ -6,37 +6,38 @@
 
 <style>
 @font-face {
-    font-family: "Moderat";
-    src: url("~assets/fonts/Moderat-Bold.eot");
-    src: url("~assets/fonts/Moderat-Bold.eot?#iefix") format("embedded-opentype"),
-        url("~assets/fonts/Moderat-Bold.woff2") format("woff2"),
-        url("~assets/fonts/Moderat-Bold.woff") format("woff");
-    font-weight: bold;
-    font-style: normal;
+  font-family: "Moderat";
+  src: url("~assets/fonts/Moderat-Bold.eot");
+  src: url("~assets/fonts/Moderat-Bold.eot?#iefix") format("embedded-opentype"),
+    url("~assets/fonts/Moderat-Bold.woff2") format("woff2"),
+    url("~assets/fonts/Moderat-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "Moderat";
-    src: url("~assets/fonts/Moderat-Regular.eot");
-    src: url("~assets/fonts/Moderat-Regular.eot?#iefix") format("embedded-opentype"),
-        url("~assets/fonts/Moderat-Regular.woff2") format("woff2"),
-        url("~assets/fonts/Moderat-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Moderat";
+  src: url("~assets/fonts/Moderat-Regular.eot");
+  src: url("~assets/fonts/Moderat-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("~assets/fonts/Moderat-Regular.woff2") format("woff2"),
+    url("~assets/fonts/Moderat-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "SpaceMono";
-    src: url("~assets/fonts/SpaceMono-Regular.ttf");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "SpaceMono";
+  src: url("~assets/fonts/SpaceMono-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "SpaceMono";
-    src: url("~assets/fonts/SpaceMono-Bold.ttf");
-    font-weight: bold;
-    font-style: normal;
+  font-family: "SpaceMono";
+  src: url("~assets/fonts/SpaceMono-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
 }
 html {
   font-family: "Moderat";
@@ -49,7 +50,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
   margin: 0;
 }
