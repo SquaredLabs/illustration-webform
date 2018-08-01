@@ -17,9 +17,11 @@
     "dotenv": "^6.0.0",
     "es6-promise": "^4.2.4",
     "express": "^4.16.3",
+    "express-fileupload": "^0.4.0",
     "isomorphic-fetch": "^2.2.1",
     "nodemailer": "^4.6.7",
     "nuxt": "^1.4.1",
+    "nuxt-dropzone": "^0.2.7",
     "sqlite3": "^4.0.2",
     "vuejs-datepicker": "^1.5.2"
   },

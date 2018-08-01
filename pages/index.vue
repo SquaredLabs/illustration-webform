@@ -42,7 +42,14 @@
 
     <div class="form">
       <h2 class="question">If available, please attach the following:</h2>
-      
+        <h3 class="question file">A copy of the article/draft for the illustrators to reference</h3>
+        <dropzone id="article" ref="article" :options="uploadOptions" :destroyDropzone="true"></dropzone>
+        <h3 class="question file">Any reference photos for content or style</h3>
+        <dropzone id="reference" ref="reference" :options="uploadOptions" :destroyDropzone="true"></dropzone>
+        <h3 class="question file">Any additional illustrations that will be included with the anticipated illustration</h3>
+        <dropzone id="additional" ref="additional" :options="uploadOptions" :destroyDropzone="true"></dropzone>
+        <h3 class="question file">The initial illustration (in the case of a remake of an existing illustration)</h3>
+        <dropzone id="original" ref="original" :options="uploadOptions" :destroyDropzone="true"></dropzone>
     </div>
     <hr>
 
@@ -86,9 +93,12 @@
 
 <script>
 
-const verifyForm = require("~/lib/VerifyForm")
+import Dropzone from 'nuxt-dropzone'
+import 'nuxt-dropzone/dropzone.css'
 import checkBox from "~/components/checkBox.vue"
 import datePicker from "vuejs-datepicker"
+
+const verifyForm = require("~/lib/VerifyForm")
 require("es6-promise").polyfill()
 require("isomorphic-fetch")
 
@@ -96,7 +106,8 @@ require("isomorphic-fetch")
 export default {
   components: {
     checkBox,
-    datePicker
+    datePicker,
+    Dropzone
   },
 
   data: () => ({
@@ -108,7 +119,10 @@ export default {
     contactName: "",
     contactEmail: "",
     contactPhone: "",
-    KFS: ""
+    KFS: "",
+    uploadOptions: {
+      url: "/api/uploadFile"
+    }
   }),
   computed: {
     submitText() {
@@ -175,6 +189,10 @@ export default {
 .question {
   margin-bottom: 2em;
   font-size: 1.1em;
+}
+.question.file {
+  margin-top: 3em;
+  font-size: 1em;
 }
 .oneliner {
   display: flex;
