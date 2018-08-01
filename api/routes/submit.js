@@ -14,7 +14,7 @@ fs.writeFile(
 
 const router = Router()
 
-const dbHandler = require("../../lib/RequestNumberGen")
+const newOrder = require("../../lib/DBHandler").newOrder
 const emailer = require("../../lib/Emailer")
 const verifyForm = require("../../lib/VerifyForm")
 
@@ -28,11 +28,16 @@ router.post("/submit", function(req, res) {
     return
   }
 
-  dbHandler((err, max) => {
+  newOrder((err, max) => {
     if (err) console.error(err)
     data.WorkOrderNumber = max
     emailer(data)
-    res.send("Success! You will get a confirmation email for your work order.")
+    res.send({
+      status:1,
+      text:
+        `Success! Submitted work order ${max} You will get a confirmation email for your work order.`,
+      wo: max
+    })
   })
 })
 

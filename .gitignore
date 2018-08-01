@@ -12,3 +12,4 @@ dist
 .vscode/settings.json
 .env
 Requests.db
+WorkOrderFiles/

@@ -102,6 +102,13 @@ const verifyForm = require("~/lib/VerifyForm")
 require("es6-promise").polyfill()
 require("isomorphic-fetch")
 
+function submitFile(dropzone, wo){
+  if(dropzone.getQueuedFiles().length===0) return
+  dropzone.on("sending", function(file, xhr, formData) {
+    formData.append("wo", wo);
+  });
+  dropzone.processQueue()
+}
 
 export default {
   components: {
@@ -121,7 +128,9 @@ export default {
     contactPhone: "",
     KFS: "",
     uploadOptions: {
-      url: "/api/uploadFile"
+      url: "/api/uploadFile",
+      autoProcessQueue:false,
+      paramName:'file'
     }
   }),
   computed: {
@@ -145,19 +154,28 @@ export default {
       if (response.status >= 400) {
         console.error("Bad response from server")
       }
-      let text = await response.text()
-      if (text.startsWith("Success")) {
-        ;(this.cover = false),
-          (this.description = ""),
-          (this.deadline = false),
-          (this.deadlineDate = ""),
-          (this.journalName = ""),
-          (this.contactName = ""),
-          (this.contactEmail = ""),
-          (this.contactPhone = ""),
-          (this.KFS = "")
+      let jsonRes = await response.json()
+      if (jsonRes.status === 1) {
+          let wo = jsonRes.wo
+          submitFile(this.$refs.article.dropzone, wo)
+          submitFile(this.$refs.reference.dropzone, wo)
+          submitFile(this.$refs.additional.dropzone, wo)
+          submitFile(this.$refs.original.dropzone, wo)
+          if(process.env.NODE_ENV=='development') return
+          this.cover = false
+          this.description = ""
+          this.deadline = false
+          this.deadlineDate = ""
+          this.journalName = ""
+          this.contactName = ""
+          this.contactEmail = ""
+          this.contactPhone = ""
+          this.KFS = ""
+          //article,reference,additional,original
+          
+
       }
-      this.alertText = text
+      this.alertText = jsonRes.text
     }
   }
 }
