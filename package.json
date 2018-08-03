@@ -5,7 +5,7 @@
   "author": "Colin McNeil <colinmcneil@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "NODE_ENV=development nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -20,11 +20,11 @@
     "es6-promise": "^4.2.4",
     "express": "^4.16.3",
     "express-fileupload": "^0.4.0",
+    "express-session": "^1.15.6",
     "isomorphic-fetch": "^2.2.1",
     "nodemailer": "^4.6.7",
     "nuxt": "^1.4.1",
     "nuxt-dropzone": "^0.2.7",
-    "express-session": "^1.15.6",
     "request-promise": "^4.2.2",
     "sqlite3": "^4.0.2",
     "vuejs-datepicker": "^1.5.2"
