@@ -19,7 +19,7 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: "#3B8070" },
-  serverMiddleware: ["~/api/index.js", "~/api/admin.js"],
+  serverMiddleware: ["~/api/api.js", "~/api/admin.js"],
   /*
   ** Build configuration
   */

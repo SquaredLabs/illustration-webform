@@ -26,11 +26,11 @@ require('isomorphic-fetch');
 export default {
   async asyncData ( ) {
     const URL = process.env.NOODE_ENV ==="production" ?
-     process.env.URL : `http://localhost:3000/api/getRequests`;
+     process.env.URL : `http://localhost:3000/getRequests`;
     
     let data = await fetch(URL)
     let requests = await data.json()
-    console.log(data, requests)
+    
     return {requests:requests}
   },
   components: {

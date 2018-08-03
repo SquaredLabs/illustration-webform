@@ -1,6 +1,5 @@
 const { Router } = require("express")
 const Cas = require('cas-authentication');
-console.log(process.env.NODE_ENV)
 const CASOPTS = {
     cas_url: 'https://login.uconn.edu/cas',
     service_url: process.env.NODE_ENV === "development" ?
@@ -15,12 +14,6 @@ const CASOPTS = {
 const cas = new Cas(CASOPTS)
 const router = Router()
 
-/* GET users listing. */
-router.get("/login", cas.bounce, (req, res) => {
-    console.log(req.session)
-    res.cookie('user', req.session.netid, { httpOnly: false })
-    res.render('admin')
-})
 router.get('/logout', (req, res) => {
     res.redirect('/')
 })
@@ -33,8 +26,10 @@ router.use(async (req, res, next) => {
         res.cookie('user', null)
 
     }
-    if (req.path !== '/admin') return next();
-    cas.bounce(req, res, next )
+    if (req.path === '/admin') cas.bounce(req, res, next)
+    else if (req.path === '/getRequests') cas.block(req, res, next)
+    else return next()
+    
     
     
 })

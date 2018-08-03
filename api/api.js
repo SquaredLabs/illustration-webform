@@ -1,6 +1,8 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const fileUpload = require('express-fileupload');
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 // Create express instnace
 const app = express()
@@ -12,12 +14,10 @@ app.use(fileUpload());
 // Require API routes
 const submit = require("./routes/submit")
 const uploadFile = require("./routes/uploadFile")
-const getRequests = require("./routes/getRequests")
 
 // Import API Routes
 app.use(submit)
 app.use(uploadFile)
-app.use(getRequests)
 
 // Export the server middleware
 module.exports = {

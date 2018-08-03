@@ -7,7 +7,8 @@ const router = Router()
 const getOrders = require("../../lib/DBHandler").getOrders
 
 /* GET users listing. */
-router.get("/getRequests", function (req, res) {
+router.get("/getRequests", function (req, res, next) {
+    
     /*
       cover: false,
       description: "",
