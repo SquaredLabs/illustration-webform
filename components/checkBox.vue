@@ -31,10 +31,10 @@ export default {
   },
   computed: {
     computedVal() {
-      return this.value === this.model
+      return this.value === this.model;
     }
   }
-}
+};
 </script>
 
 
