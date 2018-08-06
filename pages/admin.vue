@@ -7,8 +7,8 @@
           <h4 class="name">Name</h4> 
           <h4 class="deadline">Deadline</h4> 
         </div>
-        <div  v-for="request in requests" :key="request.wo">
-          <div class="request">
+        <div v-for="request in requests" :key="request.wo" @click="selectedRequest = request">
+          <div class="request listing">
             <h4 class="wo">{{request.wo_number}}</h4> 
             <h4 class="name">{{request.contactName}}</h4> 
             <h4 class="deadline">{{deadlineDisplay(request)}}</h4> 
@@ -16,30 +16,34 @@
           
         </div>
       </div>
+  <detail :request="selectedRequest" :deadlineDisplay="deadlineDisplay"/>
   </div>
 </template>
 
 <script>
+import detail from "~/components/detail"
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 export default {
-  async asyncData ( ) {
+  async mounted ( ) {
     const URL = process.env.NOODE_ENV ==="production" ?
      process.env.URL : `http://localhost:3000/getRequests`;
     
     let data = await fetch(URL)
     let requests = await data.json()
     
-    return {requests:requests}
+    this.requests=requests
   },
   components: {
-
+    detail
   
   },
 
   data: () => ({
-    requests: []
+    requests: [],
+    selectedRequest: {}
   }),
   computed: {
     
@@ -48,13 +52,15 @@ export default {
   methods: {
     deadlineDisplay(request){
       let date = request.deadlineDate;
-      return date !== '' ? date : 'N/A'
+      if(!date || date === '') return 'N/A'
+      return date.split('T')[0]
     }
   }
 }
 </script>
 
 <style>
+
 .formContainer {
   display: flex;
   justify-content: center;
@@ -75,6 +81,7 @@ export default {
   border-radius: 3px;
   padding: 2em;
 }
+
 .request {
   display: flex;
   width: 100%;
@@ -83,22 +90,24 @@ export default {
   margin-top: 1em;
   border-radius: 2px;
   background: white;
+  transition: ease 0.3s all;
 }
+
+.request.listing:hover {
+  background: #f43f3e;
+  color: white;
+  cursor: pointer;
+}
+
 .title {
   font-size: 1.3rem;
+  background: #f43f3e;
+  color: white;
 }
+
 .request * {
   margin: 0 1rem 0 1rem;
   width: 6rem;
-}
-.wo {
-  
-}
-.name {
-
-}
-.deadline {
-
 }
 
 </style>
