@@ -4,7 +4,7 @@
       <div class="header">
         <h1 class="">Request #{{request.wo_number}} </h1>
         <h1 class="">Submitted By: {{request.contactName}}</h1>
-        <h1 class="close" @click="request={}">✖</h1>
+        <h1 class="close" @click="close">✖</h1>
       </div>
 
       <div class="data">
@@ -38,7 +38,8 @@
 export default {
   props: {
     request: { type: Object, required: true },
-    deadlineDisplay: { type: Function, required: true }
+    deadlineDisplay: { type: Function, required: true },
+    close: { type: Function, required: true }
   }
 };
 </script>
@@ -52,6 +53,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(255,255,255,0.5);
 }
 .detailBox {
   background: #f43f3e;
