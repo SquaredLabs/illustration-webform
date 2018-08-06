@@ -1,7 +1,7 @@
 <template>
   <div class="formContainer">
       
-      <div class="panel">
+      <div class="panel" v-bind:class="{blurred: selectedRequest.wo_number}">
         <div class="request title">
           <h4 class="wo">#</h4> 
           <h4 class="name">Name</h4> 
@@ -16,7 +16,7 @@
           
         </div>
       </div>
-  <detail :request="selectedRequest" :deadlineDisplay="deadlineDisplay"/>
+  <detail :request="selectedRequest" :close="()=>{selectedRequest={}}" :deadlineDisplay="deadlineDisplay"/>
   </div>
 </template>
 
@@ -80,6 +80,13 @@ export default {
   background: #f5f5f6;
   border-radius: 3px;
   padding: 2em;
+}
+.blurred {
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
 }
 
 .request {
