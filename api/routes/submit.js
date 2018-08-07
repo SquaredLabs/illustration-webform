@@ -3,7 +3,7 @@ var fs = require("fs")
 var path = require("path")
 
 fs.writeFile(
-  path.join(__dirname, "../../Requests.db"),
+  path.join(__dirname, "../../datastore/Requests.db"),
   "",
   { flag: "wx" },
   function(err) {

@@ -12,7 +12,7 @@ router.post("/uploadFile", function (req, res) {
     let fileObj = req.files;
     let wo = req.body.wo
     let file = fileObj[Object.keys(fileObj)[0]]
-    let directory = path.resolve(__dirname, `../../WorkOrderFiles/WO${wo}/`)
+    let directory = path.resolve(__dirname, `../../datastore/WO${wo}/`)
     if (!fs.existsSync(directory)) {
         fs.mkdirSync(directory);
     }
