@@ -1,22 +1,30 @@
 <template>
   <div class="formContainer">
       
-      <div class="panel" v-bind:class="{blurred: selectedRequest.wo_number}">
-        <div class="request title">
-          <h4 class="wo">#</h4> 
-          <h4 class="name">Name</h4> 
-          <h4 class="deadline">Deadline</h4> 
-        </div>
-        <div v-for="request in requests" :key="request.wo" @click="selectedRequest = request">
-          <div class="request listing">
-            <h4 class="wo">{{request.wo_number}}</h4> 
-            <h4 class="name">{{request.contactName}}</h4> 
-            <h4 class="deadline">{{deadlineDisplay(request)}}</h4> 
-          </div>
-          
+    <div class="panel" v-bind:class="{blurred: selectedRequest.wo_number}">
+      <div class="request title">
+        <h4 class="wo">#</h4> 
+        <h4 class="name">Name</h4> 
+        <h4 class="deadline">Deadline</h4> 
+        <h4>Status</h4> 
+      </div>
+
+      <div v-for="request in requests" :key="request.wo" @click="selectedRequest = request">
+        <div class="request listing">
+          <h4 class="wo">{{request.wo_number}}</h4> 
+          <h4 class="name">{{request.contactName}}</h4> 
+          <h4 class="deadline">{{deadlineDisplay(request)}}</h4> 
+          <h4>{{statusDisplay(request)}}</h4>
         </div>
       </div>
-  <detail :request="selectedRequest" :close="()=>{selectedRequest={}}" :deadlineDisplay="deadlineDisplay"/>
+    </div>
+
+    <transition name="fade">
+      <detail v-show="selectedRequest.wo_number" 
+      :request="selectedRequest" :close="()=>{selectedRequest={}}" 
+      :deadlineDisplay="deadlineDisplay"/>
+    </transition>
+
   </div>
 </template>
 
@@ -53,6 +61,16 @@ export default {
       let date = request.deadlineDate;
       if(!date || date === '') return 'N/A'
       return date.split('T')[0]
+    },
+    statusDisplay(request){
+      let status = request.status;
+
+      switch(status){
+        case null: return 'NEW'
+        case 0:return 'NEW'
+        case 1:return 'Pending Signature'
+        case 2:return 'COMPLETE'
+      }
     }
   }
 }
@@ -79,6 +97,7 @@ export default {
   background: #f5f5f6;
   border-radius: 3px;
   padding: 2em;
+  transition: all 0.3s ease;
 }
 .blurred {
   filter: blur(1px);
@@ -114,6 +133,13 @@ export default {
 .request * {
   margin: 0 1rem 0 1rem;
   width: 6rem;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 </style>
