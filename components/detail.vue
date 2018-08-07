@@ -1,5 +1,5 @@
 <template>
-  <div class="detail" v-show="request.wo_number">
+  <div class="detail">
     <div class="detailBox">
       <div class="header">
         <h1 class="">Request #{{request.wo_number}} </h1>
