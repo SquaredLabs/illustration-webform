@@ -33,8 +33,7 @@ export default {
     
     let data = await fetch(URL)
     let requests = await data.json()
-    
-    this.requests=requests
+    this.requests=requests.sort((a,b)=>{return b.wo_number-a.wo_number})
   },
   components: {
     detail
