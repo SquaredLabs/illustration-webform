@@ -81,7 +81,7 @@
     <hr>
 
     <div v-show="!cover" class="form">
-      <h2 class="question">Expected KFS account number note, 
+      <h2 class="question">Expected KFS account number (note, 
       there will be no billing until a preliminary quote is provided):
       </h2>
       <input v-model="KFS" type="text" class="textInput" placeholder="KFS"> 
