@@ -27,8 +27,7 @@
       </div>
 
       <div class="controls">
-        <button class="control approve">Approve</button>
-        <button class="control decline">Decline</button>
+        <button class="control approve">Create Contract</button>
       </div>
     </div>
   </div>

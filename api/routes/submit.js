@@ -45,7 +45,7 @@ router.post("/submit", function(req, res) {
     emailer(data)
     res.send({
       status:1,
-      text: `Success! Submitted work order ${max} \
+      text: `Success! Submitted Illustratoion Request ${max} \
       You will get a confirmation email for your request.`,
       wo: max
     })
