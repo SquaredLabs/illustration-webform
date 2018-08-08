@@ -20,7 +20,6 @@ app.use(login)
 const getRequests = require("./routes/getRequests")
 app.use(getRequests)
 
-
 // Export the server middleware
 module.exports = {
     path: "/",

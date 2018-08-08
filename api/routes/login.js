@@ -1,4 +1,4 @@
-const { Router } = require("express")
+const express = require("express")
 const Cas = require('cas-authentication');
 const CASOPTS = {
     cas_url: 'https://login.uconn.edu/cas',
@@ -7,31 +7,34 @@ const CASOPTS = {
     cas_version: '2.0',
     renew: true,
     session_name: 'netid',
-    //is_dev_mode: process.env.NODE_ENV === 'development',
-    //dev_mode_user: process.env.CAS_DEV_USER,
 }
 
 const cas = new Cas(CASOPTS)
-const router = Router()
 
-router.get('/logout', (req, res) => {
+const router = express()
+
+router.get('/logout', (req, res, next) => {
+    cas.logout(req, res, next)
     res.redirect('/')
 })
 
+const authBlocked = (path) => {
+    let paths = ['/getRequests', '/getFile']
+    for (let blockedPath of paths) if (path.includes(blockedPath)) return true
+}
+
+const authBounced = (path) => {
+    let paths = ['/admin']
+    for (let blockedPath of paths) if (path.includes(blockedPath)) return true
+}
+
 router.use(async (req, res, next) => {
-    // The user cookie is sent to the frontend so it knows who's currently logged
-    // in. If the session is invalid, then we'll want to invalidate that cookie
-    // // as well.
     if (!req.session.netid) {
         res.cookie('user', null)
-
     }
-    if (req.path === '/admin') cas.bounce(req, res, next)
-    else if (req.path === '/getRequests') cas.block(req, res, next)
-    else return next()
-    
-    
-    
+    if (authBlocked(req.path)) cas.block(req, res, next)
+    else if (authBounced(req.path)) cas.bounce(req, res, next)
+    else next()
 })
 
 module.exports = router

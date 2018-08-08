@@ -27,17 +27,6 @@ router.post("/submit", function(req, res) {
     res.send(errMsg)
     return
   }
-  /*
-    cover: false,
-    description: "",
-    deadline: false,
-    deadlineDate: "",
-    journalName: "",
-    contactName: "",
-    contactEmail: "",
-    contactPhone: "",
-    KFS: ""
-    */
 
   newOrder(data, (err, max) => {
     if (err) console.error(err)

@@ -106,10 +106,11 @@ const verifyForm = require("~/lib/VerifyForm");
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
-function submitFile(dropzone, wo) {
+function submitFile(dropzone, wo, type) {
   if (dropzone.getQueuedFiles().length === 0) return;
   dropzone.on("sending", function(file, xhr, formData) {
     formData.append("wo", wo);
+    formData.append("type", type);
   });
   dropzone.processQueue();
 }
@@ -165,10 +166,10 @@ export default {
       this.alertText = jsonRes.text;
       if (jsonRes.status === 1) {
         let wo = jsonRes.wo;
-        submitFile(this.$refs.article.dropzone, wo);
-        submitFile(this.$refs.reference.dropzone, wo);
-        submitFile(this.$refs.additional.dropzone, wo);
-        submitFile(this.$refs.original.dropzone, wo);
+        submitFile(this.$refs.article.dropzone, wo, 'article');
+        submitFile(this.$refs.reference.dropzone, wo, 'reference');
+        submitFile(this.$refs.additional.dropzone, wo, 'additional');
+        submitFile(this.$refs.original.dropzone, wo, 'original');
         if (process.env.NODE_ENV == "development") return;
         this.cover = false;
         this.description = "";

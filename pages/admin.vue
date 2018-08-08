@@ -34,14 +34,23 @@ import detail from "~/components/detail"
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
+const setFilePaths = function(request){
+  console.log(request.article)
+  request.article = request.article || 'None'
+  request.reference = request.reference || 'None'
+  request.additional = request.additional || 'None'
+  request.original = request.original || 'None'
+}
+
 export default {
   async mounted ( ) {
     const URL = process.env.NOODE_ENV ==="production" ?
-     process.env.URL : `http://localhost:3000/getRequests`;
+     process.env.URL : `http://localhost:3000`;
     
-    let data = await fetch(URL)
+    let data = await fetch(URL+'/getRequests')
     let requests = await data.json()
-    this.requests=requests.sort((a,b)=>{return b.wo_number-a.wo_number})
+    this.requests = requests.sort((a,b)=>{return b.wo_number-a.wo_number})
+    requests.forEach(setFilePaths)
   },
   components: {
     detail

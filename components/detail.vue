@@ -24,6 +24,14 @@
           <h2 class="coreHeader">Description</h2>
           <div>{{request.description}} </div>
         </div>
+        <!-- article reference  additional  original -->
+        <div class="files">
+          <h2 class="coreHeader">Files</h2>
+          <fileLink :request="request" keyName="article"/>
+          <fileLink :request="request" keyName="reference"/>
+          <fileLink :request="request" keyName="additional"/>
+          <fileLink :request="request" keyName="original"/>
+        </div>
       </div>
 
       <div class="controls">
@@ -34,7 +42,12 @@
 </template>
 
 <script>
+
+import fileLink from '~/components/fileLink'
 export default {
+  components:{
+    fileLink
+  },
   props: {
     request: { type: Object, required: true },
     deadlineDisplay: { type: Function, required: true },
@@ -111,10 +124,7 @@ export default {
   background-color: white;
 }
 .approve {
-  background-color: rgb(176, 236, 176);
-}
-.decline {
-  background-color: rgb(255, 177, 177);
+  background-color: rgb(236, 236, 236);
 }
 .close {
   transition: all 0.3s ease;
