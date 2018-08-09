@@ -5,9 +5,9 @@
   "author": "Colin McNeil <colinmcneil@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "dev": "babel lib/ --out-dir lib_comp && NODE_ENV=development nuxt",
+    "build": "babel lib/ --out-dir lib_comp && nuxt build",
+    "start": "babel lib/ --out-dir lib_comp && nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint-fix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
@@ -30,6 +30,7 @@
     "vuejs-datepicker": "^1.5.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^4.19.1",
