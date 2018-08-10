@@ -18,6 +18,9 @@
         </div>
       </div>
     </div>
+    <footer>
+      <button @click="adminShown=true">Add Administrators</button>
+    </footer>
 
     <transition name="fade">
       <detail v-show="selectedRequest.wo_number" 
@@ -25,11 +28,18 @@
       :deadlineDisplay="deadlineDisplay"/>
     </transition>
 
+    <transition name="fade">
+      <modifyAdmins v-show="adminShown" 
+      :close="()=>{adminShown=false}" 
+      :admins="admins"/>
+    </transition>
+
   </div>
 </template>
 
 <script>
 import detail from "~/components/detail"
+import modifyAdmins from "~/components/modifyAdmins"
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
@@ -53,13 +63,16 @@ export default {
     requests.forEach(setFilePaths)
   },
   components: {
-    detail
+    detail,
+    modifyAdmins
   
   },
 
   data: () => ({
     requests: [],
-    selectedRequest: {}
+    selectedRequest: {},
+    admins: ['cam13052'],
+    adminShown: false
   }),
   computed: {
     
@@ -149,6 +162,29 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 1em;
+}
+footer button {
+  color: white;
+  background-color: #f43f3e;
+  border: none;
+  outline: none;
+  padding: 1em;
+  font-size: 1.2em;
+  border-radius: 3px;
+  border: solid transparent 1px;
+  transition: all ease 0.3s;
+}
+footer button:hover {
+  background-color: white;
+  color: #f43f3e;
+  cursor: pointer;
+  border-color: black;
+  
 }
 
 </style>
