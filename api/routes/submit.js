@@ -16,7 +16,7 @@ const router = Router()
 
 const newOrder = require("../../lib/DBHandler").newOrder
 const emailer = require("../../lib/Emailer")
-const verifyForm = require("../../lib/VerifyFormC")
+const verifyForm = require("../../lib/VerifyFormC").default
 
 /* GET users listing. */
 router.post("/submit", function(req, res) {

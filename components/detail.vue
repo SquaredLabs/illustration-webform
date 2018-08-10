@@ -35,7 +35,7 @@
       </div>
 
       <div class="controls">
-        <button class="control approve">Create Contract</button>
+        <button class="control approve" @click="approve">Create Contract</button>
       </div>
     </div>
   </div>
@@ -52,6 +52,11 @@ export default {
     request: { type: Object, required: true },
     deadlineDisplay: { type: Function, required: true },
     close: { type: Function, required: true }
+  },
+  methods:{
+    approve(){
+      this.$router.push(`approvalForm/${this.request.wo_number}`)
+    }
   }
 };
 </script>

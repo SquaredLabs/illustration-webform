@@ -19,12 +19,12 @@ router.get('/logout', (req, res, next) => {
 })
 
 const authBlocked = (path) => {
-    let paths = ['/getRequests', '/getFile']
+    let paths = ['/getRequests', '/getFile', '/getRequest']
     for (let blockedPath of paths) if (path.includes(blockedPath)) return true
 }
 
 const authBounced = (path) => {
-    let paths = ['/admin']
+    let paths = ['/admin', '/approvalForm' ]
     for (let blockedPath of paths) if (path.includes(blockedPath)) return true
 }
 

@@ -111,7 +111,16 @@ require("isomorphic-fetch");
 
 
 export default {
-  mounted(){
+  async mounted(){
+    this.wo = this.$route.params.WO
+    if(this.wo===0 || this.wo===NaN) return this.$router.go('/')
+    
+    const URL = process.env.NOODE_ENV ==="production" ?
+     process.env.URL : `http://localhost:3000`;
+    
+    let data = await fetch(URL+'/getRequest/'+this.wo)
+    let request = await data.json()
+    this.data = Object.assign(this.$data, request)
     
   },
   components: {
@@ -119,6 +128,7 @@ export default {
   },
 
   data: () => ({
+    wo: 0,
     contactName: "",
     KFS: "",
     alertText: "",
