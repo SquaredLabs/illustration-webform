@@ -5,13 +5,14 @@
   "author": "Colin McNeil <colinmcneil@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "babel lib/ --out-dir lib_comp && NODE_ENV=development nuxt",
-    "build": "babel lib/ --out-dir lib_comp && nuxt build",
-    "start": "babel lib/ --out-dir lib_comp && nuxt start",
+    "dev": "npm run generate-commonjs && NODE_ENV=development nuxt",
+    "build": "npm run generate-commonjs && nuxt build",
+    "start": "npm run generate-commonjs && nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint-fix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "generate-commonjs": "babel --plugins transform-es2015-modules-commonjs lib/VerifyForm.js --out-file lib/VerifyFormC.js"
   },
   "dependencies": {
     "cas-authentication": "0.0.8",
@@ -22,8 +23,9 @@
     "express-fileupload": "^0.4.0",
     "express-session": "^1.15.6",
     "isomorphic-fetch": "^2.2.1",
+    "module": "^1.2.5",
     "nodemailer": "^4.6.7",
-    "nuxt": "^1.4.1",
+    "nuxt": "^1.4.2",
     "nuxt-dropzone": "^0.2.7",
     "request-promise": "^4.2.2",
     "sqlite3": "^4.0.2",
@@ -33,6 +35,7 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.9.0",

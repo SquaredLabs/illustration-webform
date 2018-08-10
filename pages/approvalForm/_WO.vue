@@ -105,11 +105,15 @@
 // import checkBox from "~/components/checkBox.vue";
 import datePicker from "vuejs-datepicker";
 
-const verifyForm = require("~/lib_comp/VerifyForm");
+import verifyForm from "~/lib/VerifyForm";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
+
 export default {
+  mounted(){
+    
+  },
   components: {
     datePicker,
   },

@@ -5,9 +5,18 @@ var path = require("path")
 const router = Router()
 
 const getOrders = require("../../lib/DBHandler").getOrders
+const getOrder = require("../../lib/DBHandler").getOrder
 
 router.get("/getRequests", function (req, res, next) {
     getOrders((err, requests) => {
+        res.json(requests)
+    })
+})
+router.get("/getRequest/:WO", function (req, res, next) {
+    let WO = parseInt(req.params.WO);
+    console.log(WO)
+    if(WO === NaN) {return res.end(`Invalid WO: ${WO}`)}
+    getOrder(WO, (err, requests) => {
         res.json(requests)
     })
 })
