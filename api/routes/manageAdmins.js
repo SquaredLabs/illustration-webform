@@ -12,17 +12,17 @@ router.get("/getAdmins", function (req, res, next) {
   })
 })
 router.get("/addAdmin/:admin", function (req, res, next) {
-  let admin = req.params.admin
-  if (!admin) { return res.end(`Invalid admin.`) }
+  let netID = req.params.admin
+  if (!netID) { return res.end(`Invalid admin.`) }
   addAdmin(netID, (err, requests) => {
-    res.json(requests)
+    res.end(err || `Successfully Added ${netID}`)
   })
 })
 router.get("/removeAdmin/:admin", function (req, res, next) {
-  let admin = req.params.admin
-  if (!admin) { return res.end(`Invalid admin.`) }
+  let netID = req.params.admin
+  if (!netID) { return res.end(`Invalid admin.`) }
   removeAdmin(netID, (err, requests) => {
-    res.json(requests)
+    res.end(err || `Successfully Removed ${netID}`)
   })
 })
 

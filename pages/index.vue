@@ -1,11 +1,7 @@
 <template>
   <div class="formContainer">
 
-    <div class = "alert" v-show="alertText!=''">
-      <h3> Submitted: </h3>
-      <p>{{alertText}}</p>
-      <button class="copyContact alertButton" v-on:click="alertText=''">Okay</button>
-    </div>
+    <alert :text="alertText" :clear="()=>alertText=''"/>
 
     <div class ="form branding">
       <p>UCONN</p>
@@ -99,10 +95,13 @@
 <script>
 import Dropzone from "nuxt-dropzone";
 import "nuxt-dropzone/dropzone.css";
-import checkBox from "~/components/checkBox.vue";
+import checkBox from "~/components/checkBox";
+import alert from "~/components/alert"
+
 import datePicker from "vuejs-datepicker";
 
 import verifyForm from "~/lib/VerifyForm";
+
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
@@ -194,30 +193,6 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 20px 6em 20px 6em;
-}
-
-.alert {
-  position: fixed;
-  z-index: 5;
-  background-color: white;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 2em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: solid black 2px;
-  border-radius: 2px;
-}
-
-.alert p {
-  margin: 1em 0 1em 0;
-}
-
-.alertButton {
-  width: 50%;
 }
 
 .form {

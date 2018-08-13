@@ -115,7 +115,7 @@ export default {
     this.wo = this.$route.params.WO
     if(this.wo===0 || this.wo===NaN) return this.$router.go('/')
     
-    const URL = process.env.NOODE_ENV ==="production" ?
+    const URL = process.env.NODE_ENV ==="production" ?
      process.env.URL : `http://localhost:3000`;
     
     let data = await fetch(URL+'/getRequest/'+this.wo)

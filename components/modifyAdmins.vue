@@ -1,5 +1,7 @@
 <template>
   <div class="admins">
+    <alert :text="alertText" :clear="()=>alertText=''"/>
+      
     <div class="adminBox">
       <div class="header">
         <h1 class="">Admin List</h1>
@@ -7,12 +9,15 @@
       </div>
       <div class="list">
         <div class="admin" v-for="admin in admins" :key=admin>
-          <span class="name">{{admin}}</span><button class="del">☒</button>
+          <span class="name">{{admin}}</span>
+          <button class="del" @click="remove(admin)">
+            ☒
+          </button>
         </div>
       </div>
 
       <div class="controls">
-        <input class ="control adminText" type="text" placeholder="netID"/>
+        <input class ="control adminText" v-model="netID" type="text" placeholder="netID"/>
         <button class="control add" @click="add">+</button>
       </div>
 
@@ -21,15 +26,50 @@
 </template>
 
 <script>
+import alert from "~/components/alert"
+
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+const getURL = function(){
+    return process.env.NODE_ENV ==="production" ?
+     process.env.URL : `http://localhost:3000`;
+}
+
 
 export default {
   props: {
-    admins: { type: Array, required: true },
+
     close: { type: Function, required: true }
   },
+  components:{
+    alert
+  },
+  data: () =>({
+    netID:"",
+    admins: [],
+    alertText: '',
+  }),
+  async mounted ( ) {
+    await this.get()
+  },
   methods:{
-    add(){
-      
+    async add(){
+      let URL = getURL()
+      let data = await fetch(`${URL}/addAdmin/${this.netID}`)
+      this.alertText = await data.text()
+    },
+    async remove(netID){
+      let URL = getURL()
+      let data = await fetch(`${URL}/removeAdmin/${netID}`)
+      this.alertText = await data.text()
+      await this.get()
+    },
+    async get(){
+      let URL = getURL()
+      let data = await fetch(URL+'/getAdmins')
+      let admins = await data.json()
+      this.admins = admins.map(admin=>admin.netID)
+      await this.get()
     }
   }
 };

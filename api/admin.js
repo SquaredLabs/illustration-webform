@@ -20,6 +20,9 @@ app.use(login)
 const getRequests = require("./routes/getRequests")
 app.use(getRequests)
 
+const manageAdmins = require("./routes/manageAdmins")
+app.use(manageAdmins)
+
 // Export the server middleware
 module.exports = {
     path: "/",

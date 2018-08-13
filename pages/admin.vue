@@ -54,7 +54,7 @@ const setFilePaths = function(request){
 
 export default {
   async mounted ( ) {
-    const URL = process.env.NOODE_ENV ==="production" ?
+    const URL = process.env.NODE_ENV ==="production" ?
      process.env.URL : `http://localhost:3000`;
     
     let data = await fetch(URL+'/getRequests')
