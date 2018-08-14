@@ -1,9 +1,9 @@
+require("dotenv").config()
 const express = require("express")
 const Cas = require('cas-authentication');
 const CASOPTS = {
     cas_url: 'https://login.uconn.edu/cas',
-    service_url: process.env.NODE_ENV === "development" ?
-        'http://localhost:3000' : process.env.URL,
+    service_url: process.env.URL,
     cas_version: '2.0',
     renew: true,
     session_name: 'netid',
@@ -20,7 +20,7 @@ router.get('/logout', (req, res, next) => {
 })
 
 const authBlocked = (path) => {
-    let paths = ['/getRequests', '/getFile', '/getRequest']
+    let paths = ['/getRequests', '/getFile', '/getRequest', '/approve']
     for (let blockedPath of paths) if (path.includes(blockedPath)) return true
 }
 

@@ -31,8 +31,7 @@ import alert from "~/components/alert"
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 const getURL = function(){
-    return process.env.NODE_ENV ==="production" ?
-     process.env.URL : `http://localhost:3000`;
+    return process.env.URL
 }
 
 

@@ -35,7 +35,7 @@
       </div>
 
       <div class="controls">
-        <button class="control approve" @click="approve">Create Contract</button>
+        <button class="control approve" @click="approve">{{contractText}}</button>
       </div>
     </div>
   </div>
@@ -56,6 +56,21 @@ export default {
   methods:{
     approve(){
       this.$router.push(`approvalForm/${this.request.wo_number}`)
+    }
+  },
+  computed: {
+    contractText(){
+      switch(this.request.status){
+        case null || 0:
+          return 'Create Contract'
+          break
+        case 1: 
+          return 'View Contract'
+          break
+        case 2:
+          return 'View Signed Contract'
+          break
+      }
     }
   }
 };
@@ -98,6 +113,7 @@ export default {
   padding: 0.3em;
   width: 100%;
   height: 3em;
+  font-size: 0.7em;
   border-radius: 3px;
 }
 .coreHeader {

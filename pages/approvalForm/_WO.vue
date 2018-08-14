@@ -27,28 +27,28 @@
     <div class="form oneliner">
       <h2 class="question">Scope of Work:</h2>
       <div class="oneliner">
-        <p class="scopeLine compact">
+        <p class="scopeLine compact" v-bind:class="{locked:locked}">
         Based on discussions with
         <input v-model="contactName" type="text" class="textInput tiny" placeholder="Client">
         ,
         <input v-model="illustrator" type="text" class="textInput tiny" placeholder="Illustrator">
         </p>
-        <p class="scopeLine compact">
+        <p class="scopeLine compact" v-bind:class="{locked:locked}">
         expects the project to take
-        <input v-model="hours" type="text" class="textInput tiny" placeholder="Hours">
+        <input v-model="hours" type="text" class="textInput tiny" placeholder="Hours"> hours
         (+-
         <input v-model="hoursPM" type="text" class="textInput tiny" placeholder="Hours">
         )
         </p>
-        <div class="scopeLine">
+        <div class="scopeLine" v-bind:class="{locked:locked}">
           The agreed upon deadline for the 1st draft (if necessary)
           <datePicker v-model="deadline1" placeholder="Date" input-class="textInput tiny" name="uniquename"/>
         </div>
-        <div class="scopeLine">
+        <div class="scopeLine" v-bind:class="{locked:locked}">
           The agreed upon deadline for the 2nd draft (if necessary) 
           <datePicker v-model="deadline2" placeholder="Date" input-class="textInput tiny" name="uniquename"/>
         </div>
-        <div class="scopeLine"> 
+        <div class="scopeLine" v-bind:class="{locked:locked}"> 
           The agreed upon deadline for the final illustration
           <datePicker v-model="deadlineFinal" placeholder="Date" input-class="textInput tiny" name="uniquename"/>
         </div>
@@ -80,12 +80,12 @@
     </div>
 
     <div class="form">
-      <div class="oneliner">
+      <div class="oneliner" v-bind:class="{locked:!locked || signed}">
         <input v-model="contactName" type="text" class="textInput" placeholder="Contact Name"> 
         <input v-model="contactSig" type="text" class="textInput" placeholder="Contact Signature"> 
         <datePicker v-model="signDate1" input-class="textInput" name="uniquename" placeholder="Date"/>
       </div>
-      <div class="oneliner">
+      <div class="oneliner" v-bind:class="{locked:locked}">
         <input v-model="illustrator" type="text" class="textInput" placeholder="Illustrator Name"> 
         <input v-model="illustratorSig" type="text" class="textInput" placeholder="Illustrator Signature"> 
         <datePicker v-model="signDate2" input-class="textInput" name="uniquename" placeholder="Date"/>
@@ -111,16 +111,22 @@ require("isomorphic-fetch");
 
 
 export default {
+  
   async mounted(){
-    this.wo = this.$route.params.WO
+    this.wo = parseInt(this.$route.params.WO)
     if(this.wo===0 || this.wo===NaN) return this.$router.go('/')
     
-    const URL = process.env.NODE_ENV ==="production" ?
-     process.env.URL : `http://localhost:3000`;
+    const URL = process.env.URL
     
     let data = await fetch(URL+'/getRequest/'+this.wo)
     let request = await data.json()
-    this.data = Object.assign(this.$data, request)
+    
+    //this.$data = Object.assign(this.$data, request)
+    for(let key in request){
+      this[key]=request[key]
+    }
+    if(request.status>=1) return this.loadContract()
+    this.$forceUpdate();
     
   },
   components: {
@@ -133,7 +139,7 @@ export default {
     KFS: "",
     alertText: "",
     illustrator: "",
-    contactName: "",
+    contactEmail: "",
     hours:0,
     hoursPM:0,
     deadline1:'',
@@ -143,12 +149,24 @@ export default {
     illustratorSig:"",
     signDate1:"",
     signDate2:"",
+    status:0,
+    submitted: false
   }),
 
   computed: {
     submitText() {
-      let errorText = verifyForm(this.$data, 'approve');
-      return errorText || "Submit";
+      let errorText = verifyForm(this.$data, (this.status === 0 ? 'approve' : 'sign'));
+      return errorText || this.submittedText || "Submit";
+    },
+    submittedText(){
+      if(this.status===2) return 'Already Signed'
+      return false
+    },
+    locked(){
+      return this.status >= 1
+    },
+    signed(){
+      return this.status==2
     }
   },
 
@@ -158,7 +176,37 @@ export default {
       this.deadlineDate = "";
       return (this.deadline = false);
     },
+    async loadContract(){
+      console.log('loading contract')
+      const URL = process.env.URL
+      let data = await fetch(URL+'/getContract/'+this.wo)
+      let contract = await data.json()
+      contract = contract[0]
+      //this.$data = Object.assign(this.$data, request)
+      for(let key in contract){
+        this[key]=contract[key]
+      }
+      this.deadline1=contract.draft1;
+      this.deadline2=contract.draft2;
+      this.deadlineFinal=contract.draft3;
+      this.signDate2=contract.illustratorDate;
+      this.signDate1 = contract.contactDate;
+      this.$forceUpdate();
+    },
     async submit() {
+      if(this.status===1){
+        let response = await fetch("/api/sign", {
+          method: "post",
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+          body: JSON.stringify(this.$data)
+        });
+        if (response.status >= 400) {
+          console.error("Bad response from server");
+        }
+        let jsonRes = await response.json();
+        this.alertText = jsonRes.text;
+        return
+      }
       let response = await fetch("/api/approve", {
         method: "post",
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -186,13 +234,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 .formContainer {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 20px 6em 20px 6em;
+  overflow: auto;
 }
 
 .alert {
@@ -324,6 +373,11 @@ export default {
 .button.disabled {
   background: rgba(255, 0, 0, 0.315);
   pointer-events: none;
+}
+
+.locked input{
+  pointer-events: none;
+  color: grey;
 }
 
 </style>

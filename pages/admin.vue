@@ -54,8 +54,7 @@ const setFilePaths = function(request){
 
 export default {
   async mounted ( ) {
-    const URL = process.env.NODE_ENV ==="production" ?
-     process.env.URL : `http://localhost:3000`;
+    const URL = process.env.URL
     
     let data = await fetch(URL+'/getRequests')
     let requests = await data.json()
@@ -98,7 +97,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .formContainer {
   display: flex;

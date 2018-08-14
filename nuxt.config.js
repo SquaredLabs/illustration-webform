@@ -1,3 +1,4 @@
+
 module.exports = {
   /*
   ** Headers of the page
@@ -20,6 +21,7 @@ module.exports = {
   */
   loading: { color: "#3B8070" },
   serverMiddleware: ["~/api/api.js", "~/api/admin.js"],
+  modules: ['@nuxtjs/dotenv'],
   /*
   ** Build configuration
   */

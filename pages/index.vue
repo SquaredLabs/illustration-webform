@@ -118,7 +118,8 @@ export default {
   components: {
     checkBox,
     datePicker,
-    Dropzone
+    Dropzone,
+    alert
   },
 
   data: () => ({
@@ -186,7 +187,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 .formContainer {
   min-height: 100vh;
