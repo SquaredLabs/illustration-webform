@@ -1,1 +1,1 @@
-FROM eggplanet/nuxt
+FROM dockterdapper/nuxt-node10
