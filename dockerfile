@@ -1,1 +1,2 @@
-FROM dockterdapper/nuxt-node10
+FROM nuxt6
+ONBUILD RUN npm install --save sqlite3

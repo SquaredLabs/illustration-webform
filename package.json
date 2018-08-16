@@ -14,6 +14,12 @@
     "precommit": "npm run lint",
     "generate-commonjs": "babel --plugins transform-es2015-modules-commonjs lib/VerifyForm.js --out-file lib/VerifyFormC.js"
   },
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3000"
+    }
+  },
   "dependencies": {
     "@nuxtjs/dotenv": "^1.1.1",
     "cas-authentication": "0.0.8",
