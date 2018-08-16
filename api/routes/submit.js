@@ -20,12 +20,12 @@ const signContract = require("../../lib/DBHandler").signContract
 const emailer = require("../../lib/Emailer")
 const verifyForm = require("../../lib/VerifyFormC").default
 
-/* GET users listing. */
 router.post("/submit", function(req, res) {
   let data = req.body
   let errMsg = verifyForm(data)
-  console.log(errMsg)
+  
   if (errMsg != 0) {
+    console.error(errMsg)
     res.send(errMsg)
     return
   }
@@ -42,11 +42,12 @@ router.post("/submit", function(req, res) {
     })
   })
 })
+
 router.post("/approve", function (req, res) {
   let data = req.body
   let errMsg = verifyForm(data, 'approve')
-  console.log(errMsg)
   if (errMsg != 0) {
+    console.error(errMsg)
     res.send(errMsg)
     return
   }
