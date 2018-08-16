@@ -177,7 +177,6 @@ export default {
       return (this.deadline = false);
     },
     async loadContract(){
-      console.log('loading contract')
       const URL = process.env.URL
       let data = await fetch(URL+'/getContract/'+this.wo)
       let contract = await data.json()

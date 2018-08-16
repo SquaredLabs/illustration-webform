@@ -20,7 +20,11 @@ router.get('/logout', (req, res, next) => {
 })
 
 const authBlocked = (path) => {
-    let paths = ['/getRequests', '/getFile', '/getRequest', '/approve']
+    let paths = [
+        '/getRequests', '/getFile', '/getRequest',
+        '/approve', '/addAdmin', '/removeAdmin',
+        '/getAdmins'
+    ]
     for (let blockedPath of paths) if (path.includes(blockedPath)) return true
 }
 
