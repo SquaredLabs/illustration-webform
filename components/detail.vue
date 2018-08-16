@@ -35,7 +35,7 @@
       </div>
 
       <div class="controls">
-        <button class="control approve" @click="approve">{{contractText}}</button>
+        <button class="control approve" @click="loadContract">{{contractText}}</button>
       </div>
     </div>
   </div>
@@ -54,8 +54,14 @@ export default {
     close: { type: Function, required: true }
   },
   methods:{
-    approve(){
-      this.$router.push(`approvalForm/${this.request.wo_number}`)
+    async loadContract(){
+      let woEncrypted = await this.getEncryptedWO(this.request.wo_number)
+      this.$router.push(`approvalForm/${woEncrypted}`)
+    },
+    async getEncryptedWO(WO){
+      let data = await fetch(`/getEncryptedWO/${WO}`)
+      let encrypted = await data.text()
+      return encrypted
     }
   },
   computed: {

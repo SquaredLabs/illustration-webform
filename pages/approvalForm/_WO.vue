@@ -113,7 +113,10 @@ require("isomorphic-fetch");
 export default {
   
   async mounted(){
-    this.wo = parseInt(this.$route.params.WO)
+    let encryptedWO = this.$route.params.WO
+    let decryptedData = await fetch(`/getDecryptedWO/${encryptedWO}`)
+    let woStr = await decryptedData.text()
+    this.wo = parseInt(woStr)
     if(this.wo===0 || this.wo===NaN) return this.$router.go('/')
     
     const URL = process.env.URL
@@ -125,7 +128,7 @@ export default {
     for(let key in request){
       this[key]=request[key]
     }
-    if(request.status>=1) return this.loadContract()
+    if(request.status>=1) return this.loadContract(encryptedWO)
     this.$forceUpdate();
     
   },
@@ -176,9 +179,9 @@ export default {
       this.deadlineDate = "";
       return (this.deadline = false);
     },
-    async loadContract(){
+    async loadContract(encryptedWO){
       const URL = process.env.URL
-      let data = await fetch(URL+'/getContract/'+this.wo)
+      let data = await fetch(URL+'/getContract/'+encryptedWO)
       let contract = await data.json()
       contract = contract[0]
       //this.$data = Object.assign(this.$data, request)

@@ -54,6 +54,7 @@ router.post("/approve", function (req, res) {
 
   draftContract(data, (err, response) => {
     if (err) console.error(err)
+    data.status = 1
     emailer(data)
     res.send({
       status: 1,
