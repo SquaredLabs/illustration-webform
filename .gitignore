@@ -11,4 +11,6 @@ npm-debug.log
 dist
 .vscode/settings.json
 .env
-datastore/
+!/datastore/
+/datastore/**
+!/datastore/readme.md
