@@ -40,7 +40,8 @@ router.use(async (req, res, next) => {
     if (!req.session.netid) {
         res.cookie('user', null)
     }
-
+    //I don't like this logic
+    //Someday I might fix it
     if (blocked || bounced) {
         if (req.session.netid) {
             isAdmin(req.session.netid, (err, valid) => {

@@ -67,8 +67,8 @@ router.post("/approve", function (req, res) {
 router.post("/sign", function (req, res) {
   let data = req.body
   let errMsg = verifyForm(data, 'sign')
-  console.log(errMsg)
   if (errMsg != 0) {
+    console.error(errMsg)
     res.send(errMsg)
     return
   }
