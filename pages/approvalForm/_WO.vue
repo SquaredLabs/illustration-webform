@@ -16,7 +16,7 @@
       <h1>[squared labs] Scientific Illustration Client Agreement</h1>
     </div>
 
-    <div class="form oneliner">
+    <div class="form oneliner" v-bind:class="{locked:locked}">
       <h2 class="question">KFS Number (For billing)</h2>
       <input type="text" v-model="KFS" class="textInput" placeholder="KFS"/>
 
