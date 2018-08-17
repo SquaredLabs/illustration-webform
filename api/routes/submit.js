@@ -7,7 +7,8 @@ fs.writeFile(
   "",
   { flag: "wx" },
   function(err) {
-    if (err) console.log(err)
+    if (err && err.errno !== -17) console.log(err)
+    else if (err && err.errno === -17) console.log('Requests.db already exists. Did not create.')
     else console.log("Created Requests.db")
   }
 )
