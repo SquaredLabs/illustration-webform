@@ -56,7 +56,7 @@ export default {
   async mounted ( ) {
     const URL = process.env.URL
     
-    let data = await fetch(URL+'/getRequests')
+    let data = await fetch(URL+'/getRequests', {credentials: 'same-origin'})
     let requests = await data.json()
     this.requests = requests.sort((a,b)=>{return b.wo_number-a.wo_number})
     requests.forEach(setFilePaths)

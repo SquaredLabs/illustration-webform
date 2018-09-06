@@ -59,7 +59,7 @@ export default {
       this.$router.push(`approvalForm/${woEncrypted}`)
     },
     async getEncryptedWO(WO){
-      let data = await fetch(`/getEncryptedWO/${WO}`)
+      let data = await fetch(`/getEncryptedWO/${WO}`,{credentials: 'same-origin'})
       let encrypted = await data.text()
       return encrypted
     }
@@ -162,5 +162,3 @@ export default {
   color: #f43f3e;
 }
 </style>
-
-

@@ -54,18 +54,18 @@ export default {
   methods:{
     async add(){
       let URL = getURL()
-      let data = await fetch(`${URL}/addAdmin/${this.netID}`)
+      let data = await fetch(`${URL}/addAdmin/${this.netID}`, {credentials: 'same-origin'})
       this.alertText = await data.text()
     },
     async remove(netID){
       let URL = getURL()
-      let data = await fetch(`${URL}/removeAdmin/${netID}`)
+      let data = await fetch(`${URL}/removeAdmin/${netID}`, {credentials: 'same-origin'})
       this.alertText = await data.text()
       await this.get()
     },
     async get(){
       let URL = getURL()
-      let data = await fetch(URL+'/getAdmins')
+      let data = await fetch(URL+'/getAdmins', {credentials: 'same-origin'})
       let admins = await data.json()
       this.admins = admins.map(admin=>admin.netID)
       await this.get()
@@ -173,5 +173,3 @@ export default {
   color: #f43f3e;
 }
 </style>
-
-
