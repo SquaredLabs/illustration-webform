@@ -16,19 +16,19 @@
 
 
 ### Initial Request Form
-![Request Form]("https://i.imgur.com/cNrOaJH.png")
+![Request Form](https://i.imgur.com/cNrOaJH.png)
 
 ### Admin Page
-![Admin Page]("https://i.imgur.com/GAhp03I.png")
+![Admin Page](https://i.imgur.com/GAhp03I.png)
 
 ### Admin Management
-![Admin Management]("https://i.imgur.com/lI7kBgH.png")
+![Admin Management](https://i.imgur.com/lI7kBgH.png)
 
 ### Request Info
-![Request Info]("https://i.imgur.com/7ExjnKH.png")
+![Request Info](https://i.imgur.com/7ExjnKH.png)
 
 ### Illustration Contract
-![Illustration Contract]("https://i.imgur.com/OcV5JhM.png")
+![Illustration Contract](https://i.imgur.com/OcV5JhM.png)
 
 ## Build Setup
 **Note**: Requires UCONN CAS Login. To remove login dependency:
